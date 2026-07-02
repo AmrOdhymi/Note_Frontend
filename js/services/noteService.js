@@ -1,7 +1,11 @@
 import api from "../api.js";
 
 export function getNotes() {
-    return api.get("/notes");
+    return api.get("/notes?archived=false");
+}
+
+export function getArchiveNotes() {
+    return api.get("/notes?archived=true");
 }
 
 export function createNote(data) {

@@ -1,5 +1,6 @@
 import {
     getNotes,
+    getArchiveNotes,
     createNote,
     updateNote,
     deleteNote,
@@ -19,6 +20,12 @@ const refreshBtn = document.getElementById("refreshBtn");
 
 const logoutBtn = document.getElementById("logoutBtn");
 
+const archive = document.getElementById("archive");
+
+const home = document.getElementById("home");
+
+let currentPage = "home";
+
 document.addEventListener("DOMContentLoaded", start);
 
 async function start() {
@@ -27,7 +34,27 @@ async function start() {
 
     addNoteBtn.addEventListener("click", showCreateModal);
 
-    refreshBtn.addEventListener("click", loadNotes);
+    home.addEventListener("click", ()=>{
+        archive.style.cssText = "background-color: aliceblue;"
+        home.style.cssText = "background-color: #4a7c593d;"
+        currentPage = "home";
+        loadNotes()
+    });
+
+    archive.addEventListener("click", ()=>{
+        home.style.cssText = "background-color: aliceblue;"
+        archive.style.cssText = "background-color: #4a7c593d;"
+        currentPage = "archive";
+        loadArchiveNotes()
+    });
+
+    refreshBtn.addEventListener("click", ()=>{
+        if(currentPage == "home"){
+            loadNotes()
+        }else{
+            loadArchiveNotes()
+        }
+    });
 
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
@@ -42,7 +69,25 @@ async function start() {
 
 // *************************************************************
 
+async function loadArchiveNotes() {
+
+    home.style.cssText = "background-color: aliceblue;"
+    archive.style.cssText = "background-color: #4a7c593d;"
+
+    const response = await getArchiveNotes();
+
+    const archiveNotes = response.data;
+
+    localStorage.setItem("notes", JSON.stringify(archiveNotes));
+
+    renderNotes(archiveNotes);
+
+}
+
 async function loadNotes() {
+
+    archive.style.cssText = "background-color: aliceblue;"
+    home.style.cssText = "background-color: #4a7c593d;"
 
     const response = await getNotes();
 
