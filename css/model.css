@@ -1,0 +1,187 @@
+/* Modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .45);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    width: 450px;
+    max-width: 90%;
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, .2);
+}
+
+.modal-content h2 {
+    margin: 0;
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.note-view {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* Forms */
+.modal-content input,
+.modal-content textarea {
+    width: 100%;
+    padding: 12px;
+    font-size: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, .15);
+}
+
+.modal-content textarea {
+    resize: none;
+    min-height: 150px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.buttons button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+.buttons button:focus {
+    outline: none;
+}
+
+#saveBtn,
+#updateBtn,
+#archiveBtn {
+    background: var(--primary-color);
+    color: white;
+}
+
+#saveBtn:hover,
+#updateBtn:hover,
+#archiveBtn:hover {
+    background: #3f694b;
+}
+
+#saveBtn:focus,
+#updateBtn:focus,
+#archiveBtn:focus {
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.3);
+}
+
+#deleteBtn {
+    background: var(--danger-color);
+    color: white;
+}
+
+#deleteBtn:hover {
+    background: #b52218;
+}
+
+#deleteBtn:focus {
+    box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.3);
+}
+
+#cancelBtn,
+#closeBtn {
+    background: #f1f1f1;
+    color: #333;
+}
+
+#cancelBtn:hover,
+#closeBtn:hover {
+    background: #dddddd;
+}
+
+#cancelBtn:focus,
+#closeBtn:focus {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Floating Buttons */
+.floating-buttons {
+    position: fixed;
+    bottom: 25px;
+    left: 25px;
+    display: flex;
+    gap: 12px;
+    z-index: 999;
+}
+
+.floating-buttons button {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 28px;
+    color: white;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+    transition: background-color 0.25s ease, transform 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-buttons button:focus {
+    outline: none;
+}
+
+#addNoteBtn {
+    background: var(--primary-color);
+}
+
+#addNoteBtn:hover {
+    background: #3f694b;
+    transform: scale(1.08);
+}
+
+#addNoteBtn:focus {
+    box-shadow: 0 0 0 4px rgba(74, 124, 89, 0.3);
+}
+
+#refreshBtn {
+    background: #3498db;
+}
+
+#refreshBtn:hover {
+    background: #217dbb;
+    transform: scale(1.08);
+}
+
+#refreshBtn:focus {
+    box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.3);
+}

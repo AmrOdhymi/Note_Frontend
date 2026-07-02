@@ -1,0 +1,116 @@
+/* Main Content */
+.notes {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    overflow-y: auto;
+    align-content: start;
+}
+
+.notes p {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-top: 2rem;
+}
+
+/* Note Cards */
+.note-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .06);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .12);
+}
+
+.note-header {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.note-title {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+    font-weight: 600;
+}
+
+.note-body {
+    padding: 16px;
+    flex: 1;
+    line-height: 1.7;
+    color: #666;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.note-tags {
+    margin: 10px 16px;
+    font-size: 14px;
+    color: #888;
+}
+
+.note-footer {
+    padding: 12px 16px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    cursor: pointer;
+    background-color: transparent;
+    color: white;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn:hover {
+    background-color: #8de4a73d;
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.15);
+}
+
+.btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.open img {
+    filter: invert(45%) sepia(92%) saturate(1500%) hue-rotate(180deg);
+}
+
+.edit img {
+    filter: invert(45%) sepia(92%) saturate(1500%) hue-rotate(180deg);
+}
+
+.archive img {
+    filter: invert(72%) sepia(82%) saturate(700%) hue-rotate(350deg);
+}
+
+.delete img {
+    filter: invert(33%) sepia(89%) saturate(2300%) hue-rotate(340deg);
+}

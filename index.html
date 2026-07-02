@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التحقق</title>    
+</head>
+<body>
+    <!--  -->
+</body>
+<script>
+    const token = localStorage.getItem("accessToken");
+
+    if (token)
+        location.replace("dashboard.html");
+    else
+        location.replace("auth.html");
+</script>
+</html>
