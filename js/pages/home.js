@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", start);
     const image = localStorage.getItem("profile_image");
 
     if (image && image !== "null") {
-        userAvatarIcon.src = `https://laravel-production-369f.up.railway.app/storage/${image}`;
+        userAvatarIcon.src = image;
     }
     
 

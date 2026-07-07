@@ -61,7 +61,7 @@ async function loginUser(e) {
 
         localStorage.setItem("accessToken", data.token);
         localStorage.setItem("username", data.username);
-        localStorage.setItem("profile_image", data.profile_image);
+        localStorage.setItem("profile_image", `https://laravel-production-369f.up.railway.app/storage/${data.profile_image}`);
 
         window.location.href = "index.html";
         
