@@ -11,7 +11,6 @@ import { hideLoading, showLoading } from "../components/loading.js"
 
 import { createNoteCard } from "../components/noteCard.js";
 import { openModal, closeModal } from "../components/modal.js";
-import { logout } from "../services/authService.js";
 
 const notesContainer = document.getElementById("notes");
 
@@ -28,6 +27,10 @@ const logoutBtn = document.getElementById("logoutBtn");
 const archive = document.getElementById("archive");
 
 const home = document.getElementById("home");
+
+const searchInput = document.getElementById("searchInput");
+
+const clearSearch = document.getElementById("clearSearch");
 
 let currentPage = "home";
 
@@ -51,7 +54,27 @@ async function openHome(){
 
 document.addEventListener("DOMContentLoaded", start);
 
-async function start() {
+    async function start() {
+
+    searchInput.addEventListener("input", () => {
+
+        clearSearch.hidden = searchInput.value.trim() === "";
+
+        searchNotes();
+
+    });
+
+    clearSearch.addEventListener("click", () => {
+
+        searchInput.value = "";
+
+        clearSearch.hidden = true;
+
+        searchInput.focus();
+
+        searchNotes();
+
+    });
 
     username.textContent = localStorage.getItem("username");
 
@@ -512,5 +535,30 @@ async function archiveCurrentNote(id) {
         hideLoading(archiveBtn);
 
     }
+
+}
+
+
+// *************************************************************
+
+function searchNotes(){
+
+    const keyword = searchInput.value.trim().toLowerCase();
+
+    const notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    if(keyword === ""){
+
+        renderNotes(notes);
+
+        return;
+
+    }
+
+    const filtered = notes.filter(note =>
+        note.title.toLowerCase().includes(keyword)
+    );
+
+    renderNotes(filtered);
 
 }

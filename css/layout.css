@@ -180,3 +180,68 @@ nav {
         height: 10px;
     }
 }
+
+
+.search-box{
+    position: relative;
+    width: 320px;
+}
+
+.search-box input{
+    width: 100%;
+    height: 42px;
+    padding: 0 42px 0 16px;
+    border: 1px solid #d8d8d8;
+    border-radius: 12px;
+    background: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: .2s;
+    box-sizing: border-box;
+}
+
+.search-box input:focus{
+    border-color: rgb(114,208,208);
+    box-shadow: 0 0 0 3px rgba(114,208,208,.18);
+}
+
+.search-box input::placeholder{
+    color:#999;
+}
+.clear-btn{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    background: transparent;
+    color: #999;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.clear-btn:hover{
+    color: #444;
+    background: #f1f1f1;
+}
+
+.clear-btn:focus{
+    outline: none;
+}
+.clear-btn,
+.clear-btn:hover,
+.clear-btn:focus,
+.clear-btn:active{
+    transition: none !important;
+    animation: none !important;
+    transform: translateY(-50%) !important;
+}
+
