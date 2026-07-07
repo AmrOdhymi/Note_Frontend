@@ -7,6 +7,8 @@ import {
     toggleArchive
 } from "../services/noteService.js";
 
+import { hideLoading, showLoading } from "../components/loading.js"
+
 import { createNoteCard } from "../components/noteCard.js";
 import { openModal, closeModal } from "../components/modal.js";
 import { logout } from "../services/authService.js";
@@ -29,6 +31,24 @@ const home = document.getElementById("home");
 
 let currentPage = "home";
 
+async function openHome(){
+        notesContainer.innerHTML = ""
+        archive.style.cssText = "background-color: aliceblue;"
+        home.style.cssText = "background-color: #4a7c593d;"
+        currentPage = "home";
+        showLoading(home);
+        try {
+
+            await loadNotes()
+
+        }
+        finally {
+
+            hideLoading(home);
+
+        }
+}
+
 document.addEventListener("DOMContentLoaded", start);
 
 async function start() {
@@ -44,37 +64,55 @@ async function start() {
 
     addNoteBtn.addEventListener("click", showCreateModal);
 
-    home.addEventListener("click", ()=>{
-        archive.style.cssText = "background-color: aliceblue;"
-        home.style.cssText = "background-color: #4a7c593d;"
-        currentPage = "home";
-        loadNotes()
-    });
+    home.addEventListener("click", openHome);
 
-    archive.addEventListener("click", ()=>{
+    archive.addEventListener("click", async()=>{
+        notesContainer.innerHTML = ""
         home.style.cssText = "background-color: aliceblue;"
         archive.style.cssText = "background-color: #4a7c593d;"
         currentPage = "archive";
-        loadArchiveNotes()
+        
+        showLoading(archive);
+        try {
+
+            await loadArchiveNotes()
+
+        }
+        finally {
+
+            hideLoading(archive);
+
+        }
     });
 
-    refreshBtn.addEventListener("click", ()=>{
-        if(currentPage == "home"){
-            loadNotes()
-        }else{
-            loadArchiveNotes()
+    refreshBtn.addEventListener("click", async ()=>{
+        notesContainer.innerHTML = ""
+        showLoading(refreshBtn);
+        try {
+
+            if(currentPage == "home"){
+                await loadNotes()
+            }else{
+                await loadArchiveNotes()
+            }
+
+        }
+        finally {
+
+            hideLoading(refreshBtn);
+
         }
     });
 
     if (logoutBtn) {
-        logoutBtn.addEventListener("click", () => {
+        logoutBtn.addEventListener("click", async () => {
             // logout()
             localStorage.clear();
             window.location.href = 'auth.html';
         });
     }
 
-    await loadNotes();
+    await openHome()
 
 }
 
@@ -88,7 +126,6 @@ async function loadArchiveNotes() {
     const response = await getArchiveNotes();
 
     const archiveNotes = response.data;
-
     localStorage.setItem("notes", JSON.stringify(archiveNotes));
 
     renderNotes(archiveNotes);
@@ -112,8 +149,7 @@ async function loadNotes() {
 
 function renderNotes(notes) {
 
-    notesContainer.innerHTML = "";
-
+    notesContainer.innerHTML = ""
     if (notes.length == 0) {
 
         notesContainer.innerHTML = "<p>لا توجد ملاحظات</p>";
@@ -173,30 +209,43 @@ function showCreateModal() {
 
 async function saveNewNote() {
 
-    const title = document.getElementById("title").value;
+    const saveBtn = document.getElementById("saveBtn");
 
-    const content = document.getElementById("content").value;
+    showLoading(saveBtn);
+    try{
+        const title = document.getElementById("title").value;
 
-    const tags = document
-        .getElementById("tags")
-        .value
-        .split(".")
-        .map(tag => tag.trim())
-        .filter(tag => tag != "");
+        const content = document.getElementById("content").value;
+        
 
-    const note = {
+        const tags = document
+            .getElementById("tags")
+            .value
+            .split(".")
+            .map(tag => tag.trim())
+            .filter(tag => tag != "");
 
-        title,
-        content,
-        tags
+        const note = {
 
-    };
+            title,
+            content,
+            tags
 
-    await createNote(note);
+        };
 
-    closeModal();
+        await createNote(note);
 
-    loadNotes();
+        closeModal();
+
+        loadNotes();
+    } 
+    finally {
+
+        hideLoading(saveBtn);
+
+    }
+
+    
 
 }
 
@@ -252,30 +301,42 @@ function showEditModal(note) {
 
 async function updateCurrentNote(id) {
 
-    const title = document.getElementById("title").value;
+    const updateBtn = document.getElementById("updateBtn");
 
-    const content = document.getElementById("content").value;
+    showLoading(updateBtn);
 
-    const tags = document
-        .getElementById("tags")
-        .value
-        .split(".")
-        .map(tag => tag.trim())
-        .filter(tag => tag != "");
+    try{
+        const title = document.getElementById("title").value;
 
-    const newNote = {
+        const content = document.getElementById("content").value;
 
-        title,
-        content,
-        tags
+        const tags = document
+            .getElementById("tags")
+            .value
+            .split(".")
+            .map(tag => tag.trim())
+            .filter(tag => tag != "");
 
-    };
+        const newNote = {
 
-    await updateNote(id, newNote);
+            title,
+            content,
+            tags
 
-    closeModal();
+        };
 
-    loadNotes();
+        await updateNote(id, newNote);
+
+        closeModal();
+
+        loadNotes();
+    }
+
+    finally {
+
+        hideLoading(updateBtn);
+
+    }
 
 }
 
@@ -361,11 +422,24 @@ function showDeleteModal(note) {
 
 async function deleteCurrentNote(id) {
 
-    await deleteNote(id);
+    const deleteBtn = document.getElementById("deleteBtn");
 
-    closeModal();
+    showLoading(deleteBtn);
 
-    loadNotes();
+    try {
+
+        await deleteNote(id);
+
+        closeModal();
+
+        await loadNotes();
+
+    }
+    finally {
+
+        hideLoading(deleteBtn);
+
+    }
 
 }
 
@@ -373,11 +447,11 @@ async function deleteCurrentNote(id) {
 
 function showArchiveModal(note) {
 
-    const message = note.archived
+    const message = note.is_archived
         ? "هل تريد إلغاء أرشفة هذه الملاحظة؟"
         : "هل تريد أرشفة هذه الملاحظة؟";
 
-    const buttonText = note.archived
+    const buttonText = note.is_archived
         ? "إلغاء الأرشفة"
         : "أرشفة";
 
@@ -420,10 +494,23 @@ function showArchiveModal(note) {
 
 async function archiveCurrentNote(id) {
 
-    await toggleArchive(id);
+    const archiveBtn = document.getElementById("archiveBtn");
 
-    closeModal();
+    showLoading(archiveBtn);
 
-    await loadNotes();
+    try {
+
+        await toggleArchive(id);
+
+        closeModal();
+
+        await loadNotes();
+
+    }
+    finally {
+
+        hideLoading(archiveBtn);
+
+    }
 
 }

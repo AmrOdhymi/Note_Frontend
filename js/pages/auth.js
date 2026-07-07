@@ -1,4 +1,5 @@
 import { login, register } from "../services/authService.js";
+import { showLoading, hideLoading } from "../components/loading.js"
 
 // =========================
 // عناصر الصفحة
@@ -11,6 +12,10 @@ const loginSection = document.getElementById("login-section");
 const registerSection = document.getElementById("register-section");
 
 const loginError = document.getElementById("login-error");
+
+const loginBtn = document.getElementById("loginBtn");
+
+const registerBtn = document.getElementById("registerBtn");
 
 // =========================
 // الأحداث
@@ -40,7 +45,19 @@ async function loginUser(e) {
 
         const password = document.getElementById("login-password").value;
 
-        const data = await login(email, password);
+        let data;
+        showLoading(loginBtn);
+
+        try {
+
+           data = await login(email, password);
+
+        }
+        finally {
+
+            hideLoading(loginBtn);
+
+        }
 
         localStorage.setItem("accessToken", data.token);
         localStorage.setItem("username", data.username);
@@ -94,8 +111,20 @@ async function registerUser(e) {
     }
 
     try {
+        let data;
+        showLoading(registerBtn);
+        try {
 
-        const data = await register(formData);
+           data = await register(formData);
+
+        }
+        finally {
+
+            hideLoading(registerBtn);
+
+        }
+
+        
 
         localStorage.setItem("accessToken", data.token);
 
