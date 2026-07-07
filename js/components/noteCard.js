@@ -10,7 +10,7 @@ export function createNoteCard(note, actions) {
             ${note.content}
         </div>
         <div class="note-tags">
-            ${note.tags.join(" - ")}
+            ${note.tags.map(tag => tag.name).join(", ")}
         </div>
         <div class="note-footer">
             <button class="btn open">

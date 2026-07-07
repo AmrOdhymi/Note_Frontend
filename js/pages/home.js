@@ -1,5 +1,5 @@
 import {
-    getNotes,
+    getNotArchiveNotes,
     getArchiveNotes,
     createNote,
     updateNote,
@@ -9,10 +9,13 @@ import {
 
 import { createNoteCard } from "../components/noteCard.js";
 import { openModal, closeModal } from "../components/modal.js";
+import { logout } from "../services/authService.js";
 
 const notesContainer = document.getElementById("notes");
 
 const username = document.getElementById("user-display-name");
+
+const userAvatarIcon = document.getElementById("user-avatar-icon");
 
 const addNoteBtn = document.getElementById("addNoteBtn");
 
@@ -31,6 +34,13 @@ document.addEventListener("DOMContentLoaded", start);
 async function start() {
 
     username.textContent = localStorage.getItem("username");
+
+    const image = localStorage.getItem("profile_image");
+
+    if (image && image !== "null") {
+        userAvatarIcon.src = image;
+    }
+    
 
     addNoteBtn.addEventListener("click", showCreateModal);
 
@@ -58,6 +68,7 @@ async function start() {
 
     if (logoutBtn) {
         logoutBtn.addEventListener("click", () => {
+            // logout()
             localStorage.clear();
             window.location.href = 'auth.html';
         });
@@ -89,7 +100,7 @@ async function loadNotes() {
     archive.style.cssText = "background-color: aliceblue;"
     home.style.cssText = "background-color: #4a7c593d;"
 
-    const response = await getNotes();
+    const response = await getNotArchiveNotes();
 
     const notes = response.data;
 
@@ -169,7 +180,7 @@ async function saveNewNote() {
     const tags = document
         .getElementById("tags")
         .value
-        .split(",")
+        .split(".")
         .map(tag => tag.trim())
         .filter(tag => tag != "");
 
@@ -207,7 +218,7 @@ function showEditModal(note) {
 
         <input
             id="tags"
-            value="${note.tags.join(",")}"
+            value="${note.tags.map(tag => tag.name).join(".")}"
             placeholder="tag1, tag2">
 
         <div class="buttons">
@@ -248,7 +259,7 @@ async function updateCurrentNote(id) {
     const tags = document
         .getElementById("tags")
         .value
-        .split(",")
+        .split(".")
         .map(tag => tag.trim())
         .filter(tag => tag != "");
 
@@ -285,7 +296,7 @@ function showNoteModal(note) {
 
         <div class="note-tags">
 
-            ${note.tags.join(" - ")}
+            ${note.tags.map(tag => tag.name).join(" - ")}
 
         </div>
 

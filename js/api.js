@@ -1,7 +1,7 @@
 import axios from "https://cdn.jsdelivr.net/npm/axios@1.11.0/+esm";
 
 const api = axios.create({
-    baseURL: "https://6a4165581ff1d27becc185d4.mockapi.io/note",
+    baseURL: "https://laravel-production-369f.up.railway.app/api",
     timeout: 10000,
     headers: {
         "Accept": "application/json"

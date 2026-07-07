@@ -1,48 +1,137 @@
-import { login } from "../services/authService.js";
+import { login, register } from "../services/authService.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    const loginError = document.getElementById('login-error');
-    const loginForm = document.getElementById('login-form');
+// =========================
+// عناصر الصفحة
+// =========================
 
-    // --- معالجة إرسال نموذج تسجيل الدخول ---
-    loginForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+const loginForm = document.getElementById("login-form");
+const registerForm = document.getElementById("register-form");
+
+const loginSection = document.getElementById("login-section");
+const registerSection = document.getElementById("register-section");
+
+const loginError = document.getElementById("login-error");
+
+// =========================
+// الأحداث
+// =========================
+
+loginForm.addEventListener("submit", loginUser);
+
+registerForm.addEventListener("submit", registerUser);
+
+document.getElementById("showRegister").addEventListener("click", showRegister);
+
+document.getElementById("showLogin").addEventListener("click", showLogin);
+
+// =========================
+// تسجيل الدخول
+// =========================
+
+async function loginUser(e) {
+
+    e.preventDefault();
+
+    loginError.style.display = "none";
+
+    try {
+
+        const email = document.getElementById("login-email").value;
+
+        const password = document.getElementById("login-password").value;
+
+        const data = await login(email, password);
+
+        localStorage.setItem("accessToken", data.token);
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("profile_image", data.profile_image);
+
+        window.location.href = "index.html";
         
-        // القيمة المدخلة من المستخدم
-        const userName = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+    } catch (error) {
 
-        // إخفاء رسالة الخطأ السابقة إن وجدت عند كل محاولة جديدة
-        loginError.style.display = 'none';
-        loginError.textContent = '';
+        loginError.style.display = "block";
 
-        try {
-            // إرسال الطلب عبر Axios إلى الـ API الخارجي
-            const data = await login(userName, password);
+        loginError.textContent =
+            error.response?.data?.message ||
+            "فشل تسجيل الدخول";
 
-            const { accessToken, username, firstName } = data;
+    }
 
-            localStorage.setItem('accessToken', accessToken);
-            localStorage.setItem('username', username); 
+}
 
-            alert(`تم تسجيل الدخول بنجاح! أهلاً بك يا ${firstName}`);
+// =========================
+// إنشاء حساب
+// =========================
 
-            window.location.href = 'index.html'; 
+async function registerUser(e) {
 
-        } catch (error) {
-            // التعامل مع الخطأ في حال فشل تسجيل الدخول
-            loginError.style.display = 'block';
-            
-            // إذا كان هناك رد قادم من السيرفر يحتوي على رسالة خطأ معينة
-            if (error.response && error.response.data && error.response.data.message) {
-                loginError.textContent = error.response.data.message;
-            } else {
-                // خطأ عام في حال فشل الاتصال أو عدم وجود رسالة مخصصة من السيرفر
-                loginError.textContent = 'فشل تسجيل الدخول. يرجى التحقق من البيانات أو المحاولة لاحقاً.';
-            }
-            
-            console.error('خطأ أثناء تسجيل الدخول:', error);
-        }
-    });
-});
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append(
+        "username",
+        document.getElementById("register-username").value
+    );
+
+    formData.append(
+        "email",
+        document.getElementById("register-email").value
+    );
+
+    formData.append(
+        "password",
+        document.getElementById("register-password").value
+    );
+
+    const image = document.getElementById("register-image").files[0];
+
+    if (image) {
+
+        formData.append("profile_image", image);
+
+    }
+
+    try {
+
+        const data = await register(formData);
+
+        localStorage.setItem("accessToken", data.token);
+
+        window.location.href = "index.html";
+
+    } catch (error) {
+
+        alert(
+            error.response?.data?.message ||
+            "فشل إنشاء الحساب"
+        );
+
+    }
+
+}
+
+// =========================
+// تبديل النوافذ
+// =========================
+
+function showRegister() {
+
+    loginSection.classList.add("hidden");
+
+    registerSection.classList.remove("hidden");
+
+}
+
+function showLogin() {
+
+    registerSection.classList.add("hidden");
+
+    loginSection.classList.remove("hidden");
+
+}
+
+
+
+

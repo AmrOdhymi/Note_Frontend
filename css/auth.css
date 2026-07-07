@@ -127,3 +127,28 @@ button:focus {
     text-decoration: underline;
     color: var(--primary-hover);
 }
+
+
+.hidden{
+    display:none;
+}
+
+.auth-switch{
+
+    margin-top:20px;
+
+    text-align:center;
+
+    font-size:.95rem;
+
+}
+
+.auth-switch a{
+
+    color:var(--primary-color);
+
+    cursor:pointer;
+
+    font-weight:600;
+
+}

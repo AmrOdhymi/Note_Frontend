@@ -13,7 +13,131 @@
 </head>
 <body>
 
+
     <div class="auth-container">
+
+        <div id="login-section">
+
+            <h2>Login to Note Dashboard</h2>
+
+            <form id="login-form">
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        id="login-email"
+                        type="email">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        id="login-password"
+                        type="password">
+
+                </div>
+
+                <div id="login-error" class="error-message"></div>
+
+                <button type="submit">
+
+                    Login
+
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+
+                Don't have an account?
+
+                <a id="showRegister">
+
+                    Register
+
+                </a>
+
+            </p>
+
+        </div>
+
+        <div id="register-section" class="hidden">
+
+            <h2>Create Account</h2>
+
+            <form id="register-form">
+
+                <div class="form-group">
+
+                    <label>Username</label>
+
+                    <input
+                        id="register-username"
+                        type="text">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        id="register-email"
+                        type="email">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input
+                        id="register-password"
+                        type="password">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Profile Image (Optional)</label>
+
+                    <input
+                        id="register-image"
+                        type="file"
+                        accept="image/*">
+
+                </div>
+
+                <button type="submit">
+
+                    Register
+
+                </button>
+
+            </form>
+
+            <p class="auth-switch">
+
+                Already have an account?
+
+                <a id="showLogin">
+
+                    Login
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>  
+
+    <!-- <div class="auth-container">
         <div id="login-section">
             <h2>Login to Note DashBoard</h2>
             <form id="login-form">
@@ -30,7 +154,7 @@
             </form>
         </div>
 
-    </div>
+    </div> -->
 
     <script type="module" src="js/pages/auth.js"></script>
 </body>

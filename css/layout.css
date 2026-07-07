@@ -71,9 +71,9 @@ nav {
     gap: 0.75rem;
 }
 
-.user-avatar-icon {
-    width: 22px;
-    height: 22px;
+#user-avatar-icon {
+    width: 25px;
+    height: 25px;
     color: var(--primary-color);
     opacity: 0.85;
 }

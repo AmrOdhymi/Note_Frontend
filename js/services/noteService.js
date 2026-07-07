@@ -1,8 +1,13 @@
 import api from "../api.js";
 
-export function getNotes() {
+
+
+export function getNotArchiveNotes() {
     return api.get("/notes?archived=false");
 }
+// export function getNotes() {
+//     return api.get("/notes");
+// }
 
 export function getArchiveNotes() {
     return api.get("/notes?archived=true");
