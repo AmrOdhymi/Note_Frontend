@@ -14,16 +14,16 @@ export function createNoteCard(note, actions) {
         </div>
         <div class="note-footer">
             <button class="btn open">
-                <img src="/assets/icon/open.svg">
+                <img src="assets/icon/open.svg">
             </button>
             <button class="btn edit">
-                <img src="/assets/icon/edit.svg">
+                <img src="assets/icon/edit.svg">
             </button>
             <button class="btn archive">
-                <img src="/assets/icon/archive.svg">
+                <img src="assets/icon/archive.svg">
             </button>
             <button class="btn delete">
-                <img src="/assets/icon/delete.svg">
+                <img src="assets/icon/delete.svg">
             </button>
         </div>
     `;
