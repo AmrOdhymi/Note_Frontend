@@ -76,6 +76,7 @@ nav {
     height: 25px;
     color: var(--primary-color);
     opacity: 0.85;
+    border-radius: 50%;
 }
 
 #user-display-name {
